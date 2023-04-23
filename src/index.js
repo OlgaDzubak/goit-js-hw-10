@@ -13,7 +13,7 @@ const countryList = document.querySelector(".country-list");          // Пос�
 countryList.style.listStyle = "none";
 countryList.style.display = "flex";
 countryList.style.flexDirection = "column";
-countryList.style.rowGap = "20px";
+countryList.style.rowGap = "10px";
 
 const countryInfo = document.querySelector(".country-info");          // Посилання на div-контейнер з класом country-info, та його стилізація
 
@@ -59,7 +59,7 @@ function searchCountries(){
 function renderCountries(countries){
     let murkup = "";
 
-    if (!countries){
+    if (!countries.length){
         Notiflix.Notify.failure("Oops, there is no country with that name");
         return;
     }
@@ -97,12 +97,12 @@ function renderCountries(countries){
     // Якщо країн від 2 до 10 включно
     if (countries.length <= 10) {
     murkup = countries.map(({name:{common},flags:{alt, svg}}) => {
-        return `<li class="country-list-item">
+        return `<li class="country-list-item" style="font-size: 16px; height: 30px; display:flex; align-items: center; column-gap: 10px">
                     <img 
                         class="flag-svg"
                         src=${svg}
                         alt="${alt}"
-                        width="30px"
+                        width= 30px
                     >
                     ${common}
                 </li>`;
