@@ -13,7 +13,7 @@ countryList.style.listStyle = "none";
 countryList.style.display = "flex";
 countryList.style.flexDirection = "column";
 countryList.style.rowGap = "20px";
-console.dir(countryList);
+
 const countryInfo = document.querySelector(".country-info");          // Посилання на div-контейнер з класом country-info, та його стилізація
 
 searchBox.addEventListener("keyup", debounce(searchCountries, 300));  // Вішаємо слухач на searchBox, пошук (функція searchCountries) буде робитися кожні 300 мілісекунд
