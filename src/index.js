@@ -4,6 +4,7 @@ import Notiflix from "notiflix";
 import {fetchCountries} from "./js/fetchCountries";
 
 const DEBOUNCE_DELAY = 300;
+let searchWord = "";
 
 const searchBox = document.querySelector("#search-box");              // Посилання на input з id="search-box", та його стилізація
 searchBox.style.fontWeight = "bold";
@@ -16,7 +17,7 @@ countryList.style.rowGap = "20px";
 
 const countryInfo = document.querySelector(".country-info");          // Посилання на div-контейнер з класом country-info, та його стилізація
 
-searchBox.addEventListener("keyup", debounce(searchCountries, 300));  // Вішаємо слухач на searchBox, пошук (функція searchCountries) буде робитися кожні 300 мілісекунд
+searchBox.addEventListener("keyup", debounce(searchCountries, DEBOUNCE_DELAY));  // Вішаємо слухач на searchBox, пошук (функція searchCountries) буде робитися кожні 300 мілісекунд
 
 
 
@@ -28,7 +29,11 @@ searchBox.addEventListener("keyup", debounce(searchCountries, 300));  // Віш�
 //filterCommonName(функція поверне масив тільки тих країн, у яких загальна назва (name.common) містить слово searchWord, відсортований за алфавітом по полю name.common)
 function searchCountries(){
 
-    const searchWord = searchBox.value.trim().toLowerCase();  //отримуємо слово з input та форматуємо його (забираємо зайві пробіли та приводимо до нижнього регістру)
+    if (searchBox.value.trim().toLowerCase() === searchWord){
+        return;
+    }
+    
+    searchWord = searchBox.value.trim().toLowerCase();  //отримуємо слово з input та форматуємо його (забираємо зайві пробіли та приводимо до нижнього регістру)
     countryList.innerHTML = "";                               //Очищаємо розмітку списку країн
     countryInfo.innerHTML = "";                               //Очищаємо розмітку даних країни
 
