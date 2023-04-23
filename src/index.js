@@ -40,7 +40,7 @@ function searchCountries(){
     if (searchWord){                                          //якщо слово не пусте, то робимо html-запит    
         fetchCountries(searchWord)
         .then((response) => response)
-        .then((countriesJson) => renderCountries(filterCommonName(countriesJson, searchWord)))
+        .then((countriesJson) => renderCountries(filterOfficialName(countriesJson, searchWord)))
         .catch((error) => {
             if (error == "Error: 404") {
                 Notiflix.Notify.failure("Oops, there is no country with that name");
@@ -72,7 +72,7 @@ function renderCountries(countries){
 
     // Якщо країна одна
     if (countries.length === 1) {
-        murkup = countries.map(({name:{common},flags:{alt, svg},capital,population,languages}) => {
+        murkup = countries.map(({name:{official},flags:{alt, svg},capital,population,languages}) => {
             return `<p class="country-and-flag" style="font-weight: bold; font-size: 30px; height: 40px; display:flex; column-gap: 10px">
                         <span class="flag" style="height: 100%;">
                             <img 
@@ -82,7 +82,7 @@ function renderCountries(countries){
                                 height=100%
                             >
                         </span>
-                        ${common}
+                        ${official}
                     </p>
                     <p class="capital"><span class="field" style="font-weight: bold">Capital: </span>${capital}</p>
                     <p class="population"><span class="field" style="font-weight: bold">Population: </span>${population}</p>
@@ -96,7 +96,7 @@ function renderCountries(countries){
 
     // Якщо країн від 2 до 10 включно
     if (countries.length <= 10) {
-    murkup = countries.map(({name:{common},flags:{alt, svg}}) => {
+    murkup = countries.map(({name:{official},flags:{alt, svg}}) => {
         return `<li class="country-list-item" style="font-size: 16px; height: 30px; display:flex; align-items: center; column-gap: 10px">
                     <img 
                         class="flag-svg"
@@ -104,10 +104,9 @@ function renderCountries(countries){
                         alt="${alt}"
                         width= 30px
                     >
-                    ${common}
+                    ${official}
                 </li>`;
         }).join("");
-        //console.log(murkup);
         countryList.innerHTML = murkup;
         return;
     }    
@@ -117,8 +116,8 @@ function renderCountries(countries){
  //4.Функція filterCommonName - вибирає з масиву об'єктів countries тільки ті, 
  //в яких загальна назва країни (name.common) містить слово searchWord. 
  //Функція сортує отриманий масив за алфавітом по полю name.common та повертає його як результат.
-  function filterCommonName(countries, searchWord){
+  function filterOfficialName(countries, searchWord){
     return  countries
-       .filter(({name:{common}}) => common.toLowerCase().includes(searchWord))
-       .sort((country1,country2) => country1.name.common.localeCompare(country2.name.common))
+       .filter(({name:{official}}) => official.toLowerCase().includes(searchWord))
+       .sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
  }
