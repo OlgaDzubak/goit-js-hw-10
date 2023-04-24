@@ -40,13 +40,12 @@ function searchCountries(){
     if (searchWord){                                          //якщо слово не пусте, то робимо html-запит    
         fetchCountries(searchWord)
         .then((response) => response)
-        .then((countriesJson) => renderCountries(filterOfficialName(countriesJson, searchWord)))
+        .then((countriesJson) => renderCountries(countriesJson.sort((country1,country2) => country1.name.official.localeCompare(country2.name.official)))) //renderCountries(filterOfficialName(countriesJson, searchWord)))
         .catch((error) => {
-            if (error == "Error: 404") {
+            if (error.message === '404') { 
                 Notiflix.Notify.failure("Oops, there is no country with that name");
-            } else {
-                Notiflix.Notify.failure(error);
-            }
+            } 
+            console.log(error.message);
         })
     }
 }
@@ -113,10 +112,19 @@ function renderCountries(countries){
  }
 
 
- //4.Функція filterCommonName - вибирає з масиву об'єктів countries тільки ті, 
+
+
+ 
+ //4.Функція sortOfficialName - сортує масив об'єктів-країн за алфавітом по полю name.official та повертає його як результат.
+ function sortOfficialName(countries, searchWord){
+    return  countries.sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
+ }
+
+
+ //5.Функція filterOfficialName - вибирає з масиву об'єктів countries тільки ті, 
  //в яких загальна назва країни (name.common) містить слово searchWord. 
  //Функція сортує отриманий масив за алфавітом по полю name.common та повертає його як результат.
-  function filterOfficialName(countries, searchWord){
+ function filterOfficialName(countries, searchWord){
     return  countries
        .filter(({name:{official}}) => official.toLowerCase().includes(searchWord))
        .sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
