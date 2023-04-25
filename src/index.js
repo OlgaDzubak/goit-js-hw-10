@@ -116,16 +116,16 @@ function renderCountries(countries){
 
  
  //4.Функція sortOfficialName - сортує масив об'єктів-країн за алфавітом по полю name.official та повертає його як результат.
- function sortOfficialName(countries, searchWord){
-    return  countries.sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
- }
+ //function sortOfficialName(countries, searchWord){
+ //    return  countries.sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
+ // }
 
 
  //5.Функція filterOfficialName - вибирає з масиву об'єктів countries тільки ті, 
  //в яких загальна назва країни (name.common) містить слово searchWord. 
  //Функція сортує отриманий масив за алфавітом по полю name.common та повертає його як результат.
- function filterOfficialName(countries, searchWord){
-    return  countries
-       .filter(({name:{official}}) => official.toLowerCase().includes(searchWord))
-       .sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
- }
+ // function filterOfficialName(countries, searchWord){
+ //    return  countries
+ //       .filter(({name:{official}}) => official.toLowerCase().includes(searchWord))
+ //       .sort((country1,country2) => country1.name.official.localeCompare(country2.name.official))
+ // }
